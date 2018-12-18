@@ -29,7 +29,9 @@
         <activity
             android:name=".ui.register.RegisterActivity"
             android:theme="@style/AppTheme.FullScreen" />
-        <activity android:name=".ui.question.QuestionActivity"></activity>
+        <activity
+            android:name=".ui.question.QuestionActivity"
+            android:label="Questions"/>
     </application>
 
 </manifest>

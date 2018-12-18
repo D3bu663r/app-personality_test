@@ -7,6 +7,7 @@ import com.rafael.personalitytest.di.module.PreferencesModule;
 import com.rafael.personalitytest.di.module.ServiceModule;
 import com.rafael.personalitytest.di.module.ViewModelModule;
 import com.rafael.personalitytest.ui.login.LoginActivity;
+import com.rafael.personalitytest.ui.question.QuestionActivity;
 import com.rafael.personalitytest.ui.register.RegisterActivity;
 import com.rafael.personalitytest.ui.splash.SplashActivity;
 
@@ -29,4 +30,6 @@ public interface AppComponent {
     void inject(LoginActivity activity);
 
     void inject(RegisterActivity activity);
+
+    void inject(QuestionActivity activity);
 }

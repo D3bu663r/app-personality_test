@@ -10,6 +10,7 @@ import okhttp3.ResponseBody;
 
 
 public class AuthService {
+
     private AuthApi authApi;
 
     public AuthService(AuthApi authApi) {

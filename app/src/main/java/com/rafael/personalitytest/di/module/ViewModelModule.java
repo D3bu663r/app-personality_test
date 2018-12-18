@@ -2,7 +2,9 @@ package com.rafael.personalitytest.di.module;
 
 import com.rafael.personalitytest.data.PreferencesHelper;
 import com.rafael.personalitytest.data.network.service.AuthService;
+import com.rafael.personalitytest.data.network.service.QuestionService;
 import com.rafael.personalitytest.ui.login.LoginViewModel;
+import com.rafael.personalitytest.ui.question.QuestionViewModel;
 import com.rafael.personalitytest.ui.register.RegisterViewModel;
 import com.rafael.personalitytest.ui.splash.SplashViewModel;
 
@@ -30,5 +32,11 @@ public class ViewModelModule {
     @Provides
     SplashViewModel provideSplashViewModel(AuthService authService) {
         return new SplashViewModel(authService);
+    }
+
+    @Singleton
+    @Provides
+    QuestionViewModel provideQuestionViewModel(QuestionService questionService) {
+        return new QuestionViewModel(questionService);
     }
 }

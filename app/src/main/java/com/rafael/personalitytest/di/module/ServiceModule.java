@@ -1,7 +1,9 @@
 package com.rafael.personalitytest.di.module;
 
 import com.rafael.personalitytest.data.network.api.AuthApi;
+import com.rafael.personalitytest.data.network.api.QuestionApi;
 import com.rafael.personalitytest.data.network.service.AuthService;
+import com.rafael.personalitytest.data.network.service.QuestionService;
 
 import javax.inject.Singleton;
 
@@ -15,5 +17,11 @@ public class ServiceModule {
     @Provides
     AuthService provideAuthService(AuthApi api) {
         return new AuthService(api);
+    }
+
+    @Singleton
+    @Provides
+    QuestionService provideQuestionService(QuestionApi api) {
+        return new QuestionService(api);
     }
 }
