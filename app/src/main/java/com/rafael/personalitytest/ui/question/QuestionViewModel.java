@@ -3,13 +3,12 @@ package com.rafael.personalitytest.ui.question;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.rafael.personalitytest.data.PreferencesHelper;
-import com.rafael.personalitytest.data.network.service.AuthService;
+import com.annimon.stream.Stream;
 import com.rafael.personalitytest.data.network.service.QuestionService;
 import com.rafael.personalitytest.model.Question;
-import com.rafael.personalitytest.model.Token;
 import com.rafael.personalitytest.utils.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,10 +22,10 @@ public class QuestionViewModel extends ViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final MutableLiveData<String> questionError = new MutableLiveData<>();
     private final MutableLiveData<List<Question>> questions = new MutableLiveData<>();
+    private final MutableLiveData<List<String>> categories = new MutableLiveData<>();
     private final MutableLiveData<Boolean> questionProgress = new MutableLiveData<>();
     private QuestionService questionService;
-    private PreferencesHelper preferencesHelper;
-
+    private List<Question> mQuestions;
 
     public QuestionViewModel(QuestionService questionService) {
         this.questionService = questionService;
@@ -38,6 +37,10 @@ public class QuestionViewModel extends ViewModel {
 
     MutableLiveData<List<Question>> getQuestions() {
         return questions;
+    }
+
+    public MutableLiveData<List<String>> getCategories() {
+        return categories;
     }
 
     MutableLiveData<Boolean> getQuestionProgress() {
@@ -54,7 +57,19 @@ public class QuestionViewModel extends ViewModel {
 
                     @Override
                     public void onSuccess(List<Question> data) {
+                        mQuestions = data;
                         questions.setValue(data);
+
+                        List<String> category = new ArrayList<>();
+                        category.add("all");
+
+                        category.addAll(
+                                Stream.of(data)
+                                        .map(Question::getCategory)
+                                        .distinct()
+                                        .toList());
+
+                        categories.setValue(category);
                         Timber.d("perguntas carregadas com sucesso");
                     }
 
@@ -65,5 +80,17 @@ public class QuestionViewModel extends ViewModel {
                         Timber.e(message);
                     }
                 }));
+    }
+
+    public void filterQuestions(String query) {
+        if (!query.isEmpty()) {
+            if (query.equals("all")) {
+                questions.setValue(mQuestions);
+            } else {
+                questions.setValue(Stream.of(mQuestions)
+                        .filter(question -> question.getCategory().equals(query))
+                        .toList());
+            }
+        }
     }
 }
