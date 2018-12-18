@@ -1,14 +1,37 @@
 package com.rafael.personalitytest.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Question {
+public class Question implements Parcelable {
 
     private String id;
     private String description;
     private String category;
     private String type;
     private List<String> options;
+
+    protected Question(Parcel in) {
+        id = in.readString();
+        description = in.readString();
+        category = in.readString();
+        type = in.readString();
+        options = in.createStringArrayList();
+    }
+
+    public static final Creator<Question> CREATOR = new Creator<Question>() {
+        @Override
+        public Question createFromParcel(Parcel in) {
+            return new Question(in);
+        }
+
+        @Override
+        public Question[] newArray(int size) {
+            return new Question[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -48,5 +71,19 @@ public class Question {
 
     public void setOptions(List<String> options) {
         this.options = options;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(description);
+        dest.writeString(category);
+        dest.writeString(type);
+        dest.writeStringList(options);
     }
 }

@@ -31,7 +31,14 @@
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.question.QuestionActivity"
-            android:label="Questions"/>
+            android:label="Questions" />
+        <activity
+            android:name=".ui.answer.AnswerActivity"
+            android:parentActivityName=".ui.question.QuestionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.question.QuestionActivity" />
+        </activity>
     </application>
 
 </manifest>

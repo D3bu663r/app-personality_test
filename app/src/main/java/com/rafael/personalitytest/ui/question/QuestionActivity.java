@@ -1,8 +1,11 @@
 package com.rafael.personalitytest.ui.question;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 import com.rafael.personalitytest.App;
 import com.rafael.personalitytest.R;
 import com.rafael.personalitytest.model.Question;
+import com.rafael.personalitytest.ui.answer.AnswerActivity;
 
 import net.idik.lib.slimadapter.SlimAdapter;
 import net.idik.lib.slimadapter.SlimInjector;
@@ -52,7 +56,7 @@ public class QuestionActivity extends AppCompatActivity {
         niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.filterQuestions(((TextView)view).getText().toString());
+                viewModel.filterQuestions(((TextView) view).getText().toString());
             }
 
             @Override
@@ -63,11 +67,17 @@ public class QuestionActivity extends AppCompatActivity {
 
         swipeRefresh.setOnRefreshListener(() -> viewModel.loadQuestions());
 
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         slimAdapter = SlimAdapter.create()
                 .register(R.layout.item_question, new SlimInjector<Question>() {
                     @Override
-                    public void onInject(Question data, IViewInjector injector) {
+                    public void onInject(@NonNull Question data, @NonNull IViewInjector injector) {
                         injector.text(R.id.description, data.getDescription());
+                        injector.clicked(R.id.list_item, v -> {
+                            Intent intent = new Intent(getApplicationContext(), AnswerActivity.class);
+                            startActivity(intent);
+                        });
                     }
                 })
                 .enableDiff()
