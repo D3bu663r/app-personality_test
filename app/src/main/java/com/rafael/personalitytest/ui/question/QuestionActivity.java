@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -76,6 +75,7 @@ public class QuestionActivity extends AppCompatActivity {
                         injector.text(R.id.description, data.getDescription());
                         injector.clicked(R.id.list_item, v -> {
                             Intent intent = new Intent(getApplicationContext(), AnswerActivity.class);
+                            intent.putExtra("question", data);
                             startActivity(intent);
                         });
                     }
@@ -89,7 +89,7 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         viewModel.getQuestions().observe(this, questions -> {
-            if (questions != null && !questions.isEmpty()) {
+            if (questions != null) {
                 slimAdapter.updateData(questions);
             }
         });

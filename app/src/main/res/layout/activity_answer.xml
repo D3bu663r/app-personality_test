@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.answer.AnswerActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="If you were alone on a desert island, how long would you last before pleasuring yourself?"
+            android:textSize="20sp" />
+
+        <com.whygraphics.multilineradiogroup.MultiLineRadioGroup xmlns:multi_line_radio_group="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rg_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            multi_line_radio_group:max_in_row="1" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:text="Confirmar"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

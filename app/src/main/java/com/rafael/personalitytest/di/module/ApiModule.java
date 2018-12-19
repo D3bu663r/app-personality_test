@@ -1,5 +1,6 @@
 package com.rafael.personalitytest.di.module;
 
+import com.rafael.personalitytest.data.network.api.AnswerApi;
 import com.rafael.personalitytest.data.network.api.AuthApi;
 import com.rafael.personalitytest.data.network.api.QuestionApi;
 
@@ -22,5 +23,11 @@ public class ApiModule {
     @Provides
     QuestionApi provideQuestionApi(Retrofit retrofit) {
         return retrofit.create(QuestionApi.class);
+    }
+
+    @Singleton
+    @Provides
+    AnswerApi provideAnswerApi(Retrofit retrofit) {
+        return retrofit.create(AnswerApi.class);
     }
 }

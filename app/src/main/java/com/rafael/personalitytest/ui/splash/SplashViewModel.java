@@ -1,11 +1,10 @@
 package com.rafael.personalitytest.ui.splash;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 
 import com.rafael.personalitytest.data.network.service.AuthService;
 import com.rafael.personalitytest.utils.Util;
-
-import java.io.IOException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -14,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
 
-public class SplashViewModel {
+public class SplashViewModel extends ViewModel {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final MutableLiveData<Boolean> loginStatus = new MutableLiveData<>();
@@ -42,7 +41,8 @@ public class SplashViewModel {
                         loginStatus.setValue(true);
                         try {
                             Timber.d(value.string());
-                        } catch (Exception ignored) { }
+                        } catch (Exception ignored) {
+                        }
                     }
 
                     @Override
@@ -52,5 +52,11 @@ public class SplashViewModel {
                         Timber.e(message);
                     }
                 }));
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposables.clear();
     }
 }

@@ -1,6 +1,7 @@
 package com.rafael.personalitytest.ui.register;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 
 import com.rafael.personalitytest.data.PreferencesHelper;
 import com.rafael.personalitytest.data.network.service.AuthService;
@@ -13,7 +14,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class RegisterViewModel {
+public class RegisterViewModel extends ViewModel {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final MutableLiveData<String> registerError = new MutableLiveData<>();
@@ -62,5 +63,11 @@ public class RegisterViewModel {
                         Timber.e(message);
                     }
                 }));
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposables.clear();
     }
 }

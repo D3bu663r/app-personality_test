@@ -93,4 +93,10 @@ public class QuestionViewModel extends ViewModel {
             }
         }
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposables.clear();
+    }
 }
