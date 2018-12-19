@@ -35,6 +35,12 @@ public class QuestionActivity extends AppCompatActivity {
     @Inject
     QuestionViewModel viewModel;
 
+    @BindView(R.id.list_content)
+    View content;
+
+    @BindView(R.id.list_empty)
+    View empty;
+
     @BindView(R.id.nice_spinner)
     NiceSpinner niceSpinner;
 
@@ -43,6 +49,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +75,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
         slimAdapter = SlimAdapter.create()
                 .register(R.layout.item_question, new SlimInjector<Question>() {
                     @Override
@@ -82,6 +90,20 @@ public class QuestionActivity extends AppCompatActivity {
                 })
                 .enableDiff()
                 .attachTo(recyclerView);
+
+        slimAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (slimAdapter.getData().size() > 0) {
+                    content.setVisibility(View.VISIBLE);
+                    empty.setVisibility(View.GONE);
+                } else {
+                    content.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
 
         viewModel.getQuestionProgress().observe(this, showProgressBar -> {
